@@ -1,1 +1,923 @@
  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Android Studio Code Installer</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    button {
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      padding: 12px;
+      color: #333;
+      cursor: pointer;
+      text-align: left;
+      font-weight: bold;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    button:hover {
+      background-color: #e0e0e0;
+    }
+    
+    .setup-btn {
+      background-color: #e3f2fd;
+      border-color: #90caf9;
+      color: #0d47a1;
+      margin-top: 10px;
+    }
+    
+    .setup-btn:hover {
+      background-color: #bbdefb;
+    }
+
+    .divider {
+      margin: 20px 0;
+      border-bottom: 2px dashed #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Exam Code Copier</h2>
+  <div class="grid">
+    <button onclick="copyText(t1, this)">Exp 1: BMI App.tsx</button>
+    <button onclick="copyText(t2, this)">Exp 2: Expense App.tsx</button>
+    <button onclick="copyText(t3, this)">Exp 2: AddExpenseScreen.js</button>
+    <button onclick="copyText(t4, this)">Exp 2: HomeScreen.js</button>
+    <button onclick="copyText(t5, this)">Exp 2: WeeklySummaryScreen.js</button>
+    <button onclick="copyText(t6, this)">Exp 3: Metrics App.tsx</button>
+    <button onclick="copyText(t7, this)">Exp 4: Task App.tsx</button>
+    <button onclick="copyText(t8, this)">Exp 5: Index.html</button>
+    <button onclick="copyText(t9, this)">Exp 5: Style.css</button>
+    <button onclick="copyText(t10, this)">Exp 5: Index.js</button>
+    <button onclick="copyText(t11, this)">Exp 6: Location HTML</button>
+    <button onclick="copyText(t12, this)">Exp 6: Location JS</button>
+    <button onclick="copyText(t13, this)">Exp 7: AdminHome.java</button>
+    <button onclick="copyText(t14, this)">Exp 7: activity_adminhome.xml</button>
+    <button onclick="copyText(t15, this)">Exp 7: SignUpActivity.java</button>
+    <button onclick="copyText(t16, this)">Exp 7: activity_signup.xml</button>
+    <button onclick="copyText(t17, this)">Exp 7: SearchBook.java</button>
+    <button onclick="copyText(t18, this)">Exp 7: activity_searchbook.xml</button>
+
+    <div class="divider"></div>
+    
+    <button class="setup-btn" onclick="copyText(rnSetup, this)">⚙️ React Native Setup Commands</button>
+    <button class="setup-btn" onclick="copyText(cordovaSetup, this)">⚙️ Cordova Setup Commands</button>
+  </div>
+
+  <script>
+    const t1 = `import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+
+const BMI = () => {
+  const [height, setHeight] = useState('');
+  const [weight, setWeight] = useState('');
+  const [bmi, setBMI] = useState(null);
+
+  const calculateBMI = () => {
+    const heightMeters = height / 100;
+    const bmiValue = weight / (heightMeters * heightMeters);
+    setBMI(bmiValue.toFixed(2));
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>BMI Calculator</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Enter your height (cm)"
+        onChangeText={text => setHeight(text)}
+        keyboardType="numeric"
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Enter your weight (kg)"
+        onChangeText={text => setWeight(text)}
+        keyboardType="numeric"
+      />
+
+      <Button title="Calculate" onPress={calculateBMI} />
+
+      {bmi && <Text style={styles.result}>Your BMI: {bmi}</Text>}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' },
+  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
+  input: { height: 40, width: '80%', borderColor: 'gray', borderWidth: 1, marginBottom: 20, paddingLeft: 10 },
+  result: { marginTop: 20, fontSize: 20, fontWeight: 'bold' },
+});
+
+export default BMI;`;
+
+    const t2 = `import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from "./screens/HomeScreen";
+import AddExpenseScreen from "./screens/AddExpenseScreen";
+import WeeklySummaryScreen from "./screens/WeeklySummaryScreen";
+
+const Stack = createStackNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="AddExpense" component={AddExpenseScreen} />
+        <Stack.Screen name="Weekly Summary" component={WeeklySummaryScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}`;
+
+    const t3 = `import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const AddExpenseScreen = ({ navigation, route }) => {
+  const [amount, setAmount] = useState('');
+  const [category, setCategory] = useState('');
+  const [date, setDate] = useState(new Date().toISOString());
+  const { type } = route.params;
+
+  const handleSave = async () => {
+    try {
+      const existingData = await AsyncStorage.getItem(type);
+      let newData = [];
+      if (existingData) newData = JSON.parse(existingData);
+      
+      newData.push({ amount: parseFloat(amount), category, date });
+      await AsyncStorage.setItem(type, JSON.stringify(newData));
+      navigation.navigate('Home');
+    } catch (error) {
+      console.error('Error saving data:', error);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Add {type === 'income' ? 'Income' : 'Expense'}</Text>
+      <TextInput style={styles.input} placeholder="Amount" keyboardType="numeric" value={amount} onChangeText={setAmount} />
+      <TextInput style={styles.input} placeholder="Category" value={category} onChangeText={setCategory} />
+      <TextInput style={styles.input} placeholder="Date" value={date} onChangeText={setDate} />
+      <Button title="Save" onPress={handleSave} />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
+  input: { width: '80%', height: 40, borderWidth: 1, borderColor: '#ccc', borderRadius: 5, marginBottom: 10, paddingHorizontal: 10 },
+});
+
+export default AddExpenseScreen;`;
+
+    const t4 = `import React, { useState, useEffect } from 'react';
+import { View, Text, Button, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const HomeScreen = ({ navigation }) => {
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalExpense, setTotalExpense] = useState(0);
+
+  useEffect(() => { loadData(); }, []);
+
+  const loadData = async () => {
+    try {
+      const income = await AsyncStorage.getItem('income');
+      const expense = await AsyncStorage.getItem('expense');
+      if (income) setTotalIncome(parseFloat(income));
+      if (expense) setTotalExpense(parseFloat(expense));
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Expense Manager</Text>
+      <Text style={styles.total}>Total Income: $\${totalIncome.toFixed(2)}</Text>
+      <Text style={styles.total}>Total Expense: $\${totalExpense.toFixed(2)}</Text>
+      <View style={styles.buttonContainer}>
+        <Button title="Add Income" onPress={() => navigation.navigate('AddExpense', { type: 'income' })} />
+        <Button title="Add Expense" onPress={() => navigation.navigate('AddExpense', { type: 'expense' })} />
+        <Button title="Weekly Summary" onPress={() => navigation.navigate('Weekly Summary')} />
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
+  total: { fontSize: 18, marginBottom: 10 },
+  buttonContainer: { marginTop: 20 },
+});
+
+export default HomeScreen;`;
+
+    const t5 = `import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const WeeklySummaryScreen = () => {
+  const [weeklySummary, setWeeklySummary] = useState({});
+
+  useEffect(() => { loadWeeklySummary(); }, []);
+
+  const loadWeeklySummary = async () => {
+    try {
+      const incomeData = await AsyncStorage.getItem('income');
+      const expenseData = await AsyncStorage.getItem('expense');
+      const incomeArray = incomeData ? JSON.parse(incomeData) : [];
+      const expenseArray = expenseData ? JSON.parse(expenseData) : [];
+
+      const startDate = new Date();
+      startDate.setDate(startDate.getDate() - startDate.getDay());
+      const endDate = new Date();
+      endDate.setDate(startDate.getDate() + 6);
+
+      const summary = {};
+
+      incomeArray.concat(expenseArray).forEach((item) => {
+        const itemDate = new Date(item.date);
+        if (itemDate >= startDate && itemDate <= endDate) {
+          const category = item.category;
+          const amount = item.amount;
+          if (!summary[category]) summary[category] = { income: 0, expense: 0 };
+          if (item.amount > 0) summary[category].income += amount;
+          else summary[category].expense -= amount;
+        }
+      });
+      setWeeklySummary(summary);
+    } catch (error) {
+      console.error('Error loading weekly summary:', error);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Weekly Summary</Text>
+      {Object.keys(weeklySummary).map((category) => (
+        <View key={category} style={styles.categoryContainer}>
+          <Text style={styles.category}>{category}</Text>
+          <Text style={styles.amount}>Income: $\${weeklySummary[category].income.toFixed(2)}</Text>
+          <Text style={styles.amount}>Expense: $\${weeklySummary[category].expense.toFixed(2)}</Text>
+        </View>
+      ))}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
+  categoryContainer: { marginBottom: 10 },
+  category: { fontSize: 20, fontWeight: 'bold', marginBottom: 5 },
+  amount: { fontSize: 16 },
+});
+
+export default WeeklySummaryScreen;`;
+
+    const t6 = `import React, { useState } from 'react';
+import { View, TextInput, Text, Button } from 'react-native';
+
+const UnitConverter = () => {
+  const [inputValue, setInputValue] = useState('');
+  const [outputValue, setOutputValue] = useState('');
+
+  const convertToMetric = () => {
+    const miles = parseFloat(inputValue);
+    const kilometers = miles * 1.60934;
+    setOutputValue(kilometers.toFixed(2)); 
+  };
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <TextInput
+        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingHorizontal: 10 }}
+        placeholder="Enter value in miles"
+        keyboardType="numeric"
+        onChangeText={text => setInputValue(text)}
+        value={inputValue}
+      />
+      <Text>{outputValue} km</Text>
+      <Button title="Convert" onPress={convertToMetric} />
+    </View>
+  );
+};
+
+export default UnitConverter;`;
+
+    const t7 = `import React, { useState } from 'react';
+import { View, TextInput, Button, FlatList, Text, StyleSheet } from 'react-native';
+
+const ToDoApp = () => {
+  const [task, setTask] = useState('');
+  const [tasks, setTasks] = useState([]);
+
+  const addTask = () => {
+    if (task.trim() !== '') {
+      setTasks([...tasks, { id: Date.now(), task: task, completed: false }]);
+      setTask('');
+    }
+  };
+
+  const toggleTaskCompletion = id => {
+    setTasks(tasks.map(task => {
+      if (task.id === id) return { ...task, completed: !task.completed };
+      return task;
+    }));
+  };
+
+  const removeTask = id => {
+    setTasks(tasks.filter(task => task.id !== id));
+  };
+
+  return (
+    <View style={styles.container}>
+      <TextInput style={styles.input} placeholder="Enter task" onChangeText={setTask} value={task} />
+      <Button title="Add Task" onPress={addTask} />
+      <FlatList
+        data={tasks}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.task}>
+            <Text style={{ textDecorationLine: item.completed ? 'line-through' : 'none' }}>{item.task}</Text>
+            <View style={styles.buttonsContainer}>
+              <Button title={item.completed ? "Undo" : "Done"} onPress={() => toggleTaskCompletion(item.id)} />
+              <Button title="Remove" onPress={() => removeTask(item.id)} />
+            </View>
+          </View>
+        )}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { flex: 1, justifyContent: 'center', padding: 20 },
+  input: { height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingHorizontal: 10 },
+  task: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
+  buttonsContainer: { flexDirection: 'row' },
+});
+
+export default ToDoApp;`;
+
+    const t8 = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>User Login</title>
+<link rel="stylesheet" type="text/css" href="css/index.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="img/header_image.png" alt="Header Image">
+      <h1>Login</h1>
+    </header>
+    <div class="login-form">
+      <label for="username">Username: </label>
+      <input type="text" id="username" name="username" required>
+      <label for="password">Password: </label>
+      <input type="password" id="password" name="password" required>
+      <div class="buttons">
+        <button id="resetBtn">Reset</button>
+        <button id="submitBtn">Submit</button>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>`;
+
+    const t9 = `body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+.container { max-width: 400px; margin: 0 auto; padding: 20px; }
+header img { width: 100%; margin-bottom: 20px; }
+h1 { text-align: center; }
+.login-form label { display: block; margin-bottom: 10px; }
+.login-form input { width: 100%; padding: 10px; margin-bottom: 20px; box-sizing: border-box; }
+.buttons { display: flex; justify-content: space-between; }
+.buttons button { width: 48%; }`;
+
+    const t10 = `document.addEventListener('deviceready', onDeviceReady, false);
+
+function onDeviceReady() {
+  document.getElementById('resetBtn').addEventListener('click', resetForm);
+  document.getElementById('submitBtn').addEventListener('click', submitForm);
+}
+
+function resetForm() {
+  document.getElementById('username').value = '';
+  document.getElementById('password').value = '';
+}
+
+function submitForm() {
+  var username = document.getElementById('username').value;
+  var password = document.getElementById('password').value;
+}`;
+
+    const t11 = `<!DOCTYPE html>
+<html>
+<head>
+<title>Location App</title>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+</head>
+<body>
+<div id="location"> </div>
+<button onclick="getLocation()">Get Location</button>
+</body>
+</html>`;
+
+    const t12 = `function getLocation() {
+  navigator.geolocation.getCurrentPosition(onSuccess, onError);
+}
+
+function onSuccess(position) {
+  var latitude = position.coords.latitude;
+  var longitude = position.coords.longitude;
+  document.getElementById('location').innerHTML = 'Latitude: ' + latitude +
+  '<br>Longitude: ' + longitude;
+}
+
+function onError(error) {
+  alert('Error occurred: ' + error.message);
+}`;
+
+    const t13 = `import android.app.AlertDialog;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+public class AdminHome extends AppCompatActivity implements View.OnClickListener {
+
+    private Button searchBook, addBook, removeBook, updateBook, issueBook, returnBook, logOut, collect1, reissueButton;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore db;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_admin_home);
+        FirebaseApp.initializeApp(this);
+        firebaseAuth=FirebaseAuth.getInstance();
+        searchBook=(Button) findViewById(R.id.searchBook);
+        addBook=(Button) findViewById(R.id.addBook);
+        removeBook=(Button) findViewById(R.id.removeBook);
+        collect1=(Button) findViewById(R.id.collect1);
+        updateBook=(Button) findViewById(R.id.updateBook);
+        issueBook=(Button) findViewById(R.id.issueBook);
+        returnBook=(Button) findViewById(R.id.returnBook);
+        logOut=(Button) findViewById(R.id.logOut);
+        reissueButton=(Button) findViewById(R.id.reissueBook);
+        db=FirebaseFirestore.getInstance();
+
+        searchBook.setOnClickListener(this);
+        addBook.setOnClickListener(this);
+        removeBook.setOnClickListener(this);
+        updateBook.setOnClickListener(this);
+        issueBook.setOnClickListener(this);
+        returnBook.setOnClickListener(this);
+        logOut.setOnClickListener(this);
+        collect1.setOnClickListener(this);
+        reissueButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v==logOut) {
+            db.document("User/"+firebaseAuth.getCurrentUser().getEmail()).update("fcmToken", null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()) {
+                        firebaseAuth.signOut();
+                        startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(AdminHome.this, "Try Again !", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+        if(v==searchBook) startActivity(new Intent(getApplicationContext(), SearchBookSet.class));
+        if(v==addBook) startActivity(new Intent(getApplicationContext(), AdminAddBook.class));
+        if(v==removeBook) startActivity(new Intent(getApplicationContext(), AdminRemoveBook.class));
+        if(v==issueBook) startActivity(new Intent(getApplicationContext(), AdminIssueBook.class));
+        if(v==returnBook) startActivity(new Intent(getApplicationContext(), AdminReturnBook.class));
+        if(v==updateBook) startActivity(new Intent(getApplicationContext(), AdminUpdateBook.class));
+        if(v==collect1) startActivity(new Intent(getApplicationContext(), AdminCollectFine.class));
+        if(v==reissueButton) startActivity(new Intent(getApplicationContext(), AdminReissueBook.class));
+    }
+}`;
+
+    const t14 = `<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:orientation="vertical"
+    tools:context=".AdminHome">
+    
+    <ScrollView android:layout_width="match_parent" android:layout_centerVertical="true" android:layout_height="wrap_content">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="ADMIN HOME" android:textSize="20dp" android:textColor="@color/colorPrimary" android:textAlignment="center" />
+            <Button android:layout_width="200dp" android:layout_marginTop="30dp" android:gravity="center" android:layout_gravity="center" android:layout_height="wrap_content" android:id="@+id/searchBook" android:text="Search" />
+            <Button android:layout_width="200dp" android:gravity="center" android:layout_gravity="center" android:layout_height="wrap_content" android:id="@+id/addBook" android:text="Add Book" />
+            <Button android:layout_width="200dp" android:gravity="center" android:layout_gravity="center" android:layout_height="wrap_content" android:id="@+id/removeBook" android:text="Remove Book" />
+            <Button android:layout_width="200dp" android:gravity="center" android:layout_gravity="center" android:layout_height="wrap_content" android:id="@+id/updateBook" android:text="Update" />
+            <Button android:layout_width="200dp" android:gravity="center" android:layout_gravity="center" android:layout_height="wrap_content" android:id="@+id/issueBook" android:text="Issue Book to User" />
+            <Button android:layout_width="200dp" android:gravity="center" android:layout_gravity="center" android:layout_height="wrap_content" android:id="@+id/returnBook" android:text="Return Book from User" />
+            <Button android:layout_width="200dp" android:gravity="center" android:layout_gravity="center" android:layout_height="wrap_content" android:id="@+id/reissueBook" android:text="Re-Issue Book" />
+            <Button android:layout_width="200dp" android:gravity="center" android:layout_gravity="center" android:layout_height="wrap_content" android:id="@+id/collect1" android:text="Collect Fine" />
+            <Button android:layout_width="200dp" android:gravity="center" android:layout_gravity="center" android:layout_height="wrap_content" android:id="@+id/logOut" android:text="Log Out" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>`;
+
+    const t15 = `package com.iiitnr.libraryapp;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private TextInputLayout editName, editEnrollNo, editCardNo, editPass1, editID, editPass;
+    private Button buttonRegister;
+    private TextView toSignIn;
+    private ProgressDialog progressDialog;
+    private FirebaseAuth firebaseAuth;
+    private CheckBox check1;
+    private FirebaseFirestore db;
+    private Spinner userType;
+    private String type;
+    private int type1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_signup);
+        
+        editID = (TextInputLayout) findViewById(R.id.editID);
+        editPass = (TextInputLayout) findViewById(R.id.editPass);
+        editPass1 = (TextInputLayout) findViewById(R.id.editPass1);
+        editName = (TextInputLayout) findViewById(R.id.editName);
+        editEnrollNo = (TextInputLayout) findViewById(R.id.editEnrollNo);
+        editCardNo = (TextInputLayout) findViewById(R.id.editCardNo);
+        buttonRegister = (Button) findViewById(R.id.buttonRegister);
+        toSignIn = (TextView) findViewById(R.id.toSignIn);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        check1 = (CheckBox) findViewById(R.id.check1);
+        userType = (Spinner) findViewById(R.id.userType);
+
+        List<String> list = new ArrayList<>();
+        list.add("Select Account Type");
+        list.add("User");
+        list.add("Admin");
+        
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        userType.setAdapter(adapter);
+        
+        userType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                type = parent.getItemAtPosition(position).toString();
+                boolean isUser = type.equals("User");
+                boolean isAdmin = type.equals("Admin");
+                
+                editPass1.setEnabled(isUser || isAdmin);
+                editPass.setEnabled(isUser || isAdmin);
+                editName.setEnabled(isUser || isAdmin);
+                editID.setEnabled(isUser || isAdmin);
+                editEnrollNo.setEnabled(isUser);
+                editCardNo.setEnabled(isUser);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        FirebaseApp.initializeApp(this);
+        firebaseAuth=FirebaseAuth.getInstance();
+        db=FirebaseFirestore.getInstance();
+        buttonRegister.setOnClickListener(this);
+        toSignIn.setOnClickListener(this);
+        check1.setOnClickListener(this);
+    }
+
+    private boolean verifyField(TextInputLayout field, String errorMsg, boolean checkEmail) {
+        String text = field.getEditText().getText().toString().trim();
+        if(text.isEmpty()) { 
+            field.setErrorEnabled(true);
+            field.setError(errorMsg);
+            return true;
+        } else if(checkEmail && !text.endsWith("@iiitnr.edu.in")) {
+            field.setErrorEnabled(true);
+            field.setError("Enter Valid Email ID");
+            return true;
+        } else {
+            field.setErrorEnabled(false);
+            return false;
+        }
+    }
+
+    private void registerUser() {
+        if (type.equals("Select Account Type")) {
+            Toast.makeText(this, "Please select account type !", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String id=editID.getEditText().getText().toString().trim();
+        String pass=editPass.getEditText().getText().toString().trim();
+        type1 = type.equals("User") ? 0 : 1;
+
+        progressDialog.setMessage("Registering User ... ");
+        progressDialog.show();
+
+        firebaseAuth.createUserWithEmailAndPassword(id,pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()) {
+                    String name=editName.getEditText().getText().toString().trim();
+                    if(type1 == 0) {
+                        int enroll=Integer.parseInt(editEnrollNo.getEditText().getText().toString().trim());
+                        int card=Integer.parseInt(editCardNo.getEditText().getText().toString().trim());
+                        db.collection("User").document(id).set(new User(name, id, enroll, card, type1)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void avoid) {
+                                progressDialog.cancel();
+                                Toast.makeText(SignUpActivity.this, "Registered Successfully!", Toast.LENGTH_SHORT).show();
+                                firebaseAuth.signOut();
+                                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                                finish();
+                            }
+                        });
+                    } else {
+                        db.collection("User").document(id).set(new Admin(type1,name,id)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void avoid) {
+                                progressDialog.cancel();
+                                Toast.makeText(SignUpActivity.this, "Registered Successfully!", Toast.LENGTH_SHORT).show();
+                                firebaseAuth.signOut();
+                                startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+                                finish();
+                            }
+                        });
+                    }
+                } else { 
+                    progressDialog.cancel();
+                    Toast.makeText(SignUpActivity.this, "Registration Failed! Try Again", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v==check1) {
+            buttonRegister.setEnabled(check1.isChecked());
+        } else if(v==buttonRegister) {
+            registerUser();
+        } else if(v==toSignIn) {
+            startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+            finish();
+        }
+    }
+}`;
+
+    const t16 = `<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".SignUpActivity"
+    android:orientation="vertical" 
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_margin="20dp">
+
+    <ScrollView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_centerVertical="true" android:id="@+id/scroll">
+        <LinearLayout android:layout_width="match_parent" android:gravity="center" android:orientation="vertical" android:layout_height="wrap_content">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="USER REGISTRATION" android:textSize="20dp" android:id="@+id/head" android:gravity="center" android:textColor="@color/colorPrimary"/>
+            <Spinner android:layout_marginTop="30dp" android:id="@+id/userType" android:layout_width="match_parent" android:layout_height="30dp" />
+            
+            <android.support.design.widget.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:id="@+id/editName">
+                <android.support.design.widget.TextInputEditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Name" android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+            
+            <android.support.design.widget.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:id="@+id/editEnrollNo">
+                <android.support.design.widget.TextInputEditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Enrollment No." android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+            
+            <android.support.design.widget.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:id="@+id/editCardNo">
+                <android.support.design.widget.TextInputEditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Library Card No." android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+            
+            <android.support.design.widget.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:id="@+id/editID">
+                <android.support.design.widget.TextInputEditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Email ID" android:inputType="textEmailAddress" />
+            </android.support.design.widget.TextInputLayout>
+            
+            <android.support.design.widget.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/editPass" android:layout_marginTop="10dp" app:passwordToggleEnabled="true">
+                <android.support.design.widget.TextInputEditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Password" android:inputType="textPassword" />
+            </android.support.design.widget.TextInputLayout>
+            
+            <android.support.design.widget.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/editPass1" android:layout_marginTop="10dp" app:passwordToggleEnabled="true">
+                <android.support.design.widget.TextInputEditText android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Confirm Password" android:inputType="textPassword" />
+            </android.support.design.widget.TextInputLayout>
+            
+            <CheckBox android:id="@+id/check1" android:layout_marginTop="10dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="I Agree that the information provided is correct"/>
+            <Button android:id="@+id/buttonRegister" android:enabled="false" android:layout_marginTop="10dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Register" android:textColor="#000000"/>
+            <TextView android:id="@+id/toSignIn" android:layout_width="match_parent" android:layout_marginTop="10dp" android:layout_height="wrap_content" android:gravity="center" android:textSize="15dp" android:textColor="@color/colorPrimary" android:text="Already Registered ? Sign in " />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>`;
+
+    const t17 = `package com.iiitnr.libraryapp;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
+public class SearchBook extends AppCompatActivity {
+
+    private FirebaseFirestore db;
+    private FirestoreRecyclerAdapter adapter;
+    private int mode = 0;
+    private String key = "";
+    ProgressDialog progressDialog;
+    private TextView ifNoBook;
+    Query query;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search_book);
+        ifNoBook=(TextView) findViewById(R.id.ifNoBook);
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setMessage("Please Wait!");
+        FirebaseApp.initializeApp(this);
+        db=FirebaseFirestore.getInstance();
+        progressDialog.show();
+        Intent intent=getIntent();
+
+        switch(intent.getIntExtra("id",0)) {
+            case 1:
+                mode=0; query=db.collection("Book").whereEqualTo("id", intent.getIntExtra("bid",0)).whereGreaterThan("available",0); break;
+            case 2:
+                mode=0; query=db.collection("Book").whereEqualTo("id", intent.getIntExtra("bid",0)); break;
+            case 3:
+                mode=1; key=intent.getStringExtra("btitle"); query=db.collection("Book").whereEqualTo("type", intent.getStringExtra("btype")).whereGreaterThan("available",0); break;
+            case 4:
+                mode=1; key=intent.getStringExtra("btitle"); query=db.collection("Book").whereEqualTo("type", intent.getStringExtra("btype")); break;
+            case 5:
+                mode=1; key=intent.getStringExtra("btitle"); query=db.collection("Book").whereGreaterThan("available",0); break;
+            case 6:
+                mode=1; key=intent.getStringExtra("btitle"); query=db.collection("Book"); break;
+            case 7:
+                mode=0; query=db.collection("Book").whereEqualTo("type", intent.getStringExtra("btype")).whereGreaterThan("available",0); break;
+            case 8:
+                mode=0; query=db.collection("Book").whereEqualTo("type", intent.getStringExtra("btype")); break;
+        }
+
+        FirestoreRecyclerOptions options = new FirestoreRecyclerOptions.Builder<Book>().setQuery(query, Book.class).build();
+        adapter = new BookAdapter(options, key.toUpperCase(), mode);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycle);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+        progressDialog.cancel();
+    }
+
+    @Override
+    protected void onStart() { super.onStart(); adapter.startListening(); }
+
+    @Override
+    protected void onStop() { super.onStop(); adapter.stopListening(); }
+}`;
+
+    const t18 = `<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchBook">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="18dp"
+        android:text="No Such Book!"
+        android:textAlignment="center"
+        android:layout_marginTop="0.2in"
+        android:id="@+id/ifNoBook"
+        android:textColor="#F10A0A"/>
+        
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+    
+</android.support.design.widget.CoordinatorLayout>`;
+
+    // --- SETUP COMMANDS ---
+    const rnSetup = `npm install -g react-native-cli && npx react-native@latest init AwesomeProject && cd AwesomeProject && npm install @react-navigation/native @react-navigation/stack @react-native-async-storage/async-storage && npm run android`;
+    const cordovaSetup = `npm install -g cordova && cordova create myApp com.example.myapp MyApp && cd myApp && cordova platform add android && cordova plugin add cordova-plugin-geolocation && cordova run android`;
+
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.innerText;
+        btn.innerText = "Copied!";
+        btn.style.backgroundColor = "#c8e6c9";
+
+        setTimeout(() => {
+          btn.innerText = originalText;
+          // Restore correct background color depending on button type
+          if (btn.classList.contains("setup-btn")) {
+             btn.style.backgroundColor = "#e3f2fd";
+          } else {
+             btn.style.backgroundColor = "#f0f0f0";
+          }
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>
